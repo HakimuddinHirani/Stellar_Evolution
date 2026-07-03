@@ -1,4 +1,0 @@
-{
-  "include": ["backend", "examples"],
-  "extraPaths": ["backend"]
-}
