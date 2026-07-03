@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stellar Evolution</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="control-panel" aria-label="Simulation controls">
+        <div class="brand-block">
+          <p class="eyebrow">Ad Astra Research and Tech</p>
+          <h1>Stellar Evolution</h1>
+        </div>
+
+        <form id="simulation-form" class="controls" novalidate>
+          <label>
+            <span>Mass</span>
+            <input id="mass" type="number" min="0.1" max="25" step="0.1" value="1.0" />
+            <small>Solar masses, recommended 0.1 to 25</small>
+          </label>
+
+          <label>
+            <span>Radius</span>
+            <input id="radius" type="number" min="0.1" max="100" step="0.1" value="1.0" />
+            <small>Solar radii, recommended 0.1 to 100</small>
+          </label>
+
+          <label>
+            <span>Central temperature</span>
+            <input id="central-temperature" type="number" min="1000000" step="100000" value="15500000" />
+            <small>Kelvin, recommended 1e6 to 8e8</small>
+          </label>
+
+          <label>
+            <span>Central pressure</span>
+            <input id="central-pressure" type="text" inputmode="decimal" list="pressure-options" value="2.45e17" />
+            <datalist id="pressure-options">
+              <option value="1.0e15"></option>
+              <option value="2.45e17"></option>
+              <option value="1.0e18"></option>
+              <option value="1.0e20"></option>
+            </datalist>
+            <small>dyne cm^-2, try 1e15 to 1e20</small>
+          </label>
+
+          <div class="composition-grid">
+            <label>
+              <span>Hydrogen</span>
+              <input id="hydrogen" type="number" min="0" max="1" step="0.01" value="0.70" />
+            </label>
+            <label>
+              <span>Helium</span>
+              <input id="helium" type="number" min="0" max="1" step="0.01" value="0.28" />
+            </label>
+            <label>
+              <span>Metals</span>
+              <input id="metals" type="number" min="0" max="1" step="0.001" value="0.02" />
+            </label>
+          </div>
+
+          <div id="validation-message" class="validation-message" hidden></div>
+          <button type="submit">Run simulation</button>
+        </form>
+      </section>
+
+      <section class="visual-stage" aria-label="Star visualization">
+        <div class="stage-top">
+          <div>
+            <p class="eyebrow">Current phase</p>
+            <h2 id="phase">Main sequence</h2>
+          </div>
+          <div class="status-pill" id="status">Ready</div>
+        </div>
+
+        <div class="star-scene">
+          <div class="orbit-ring orbit-ring-a"></div>
+          <div class="orbit-ring orbit-ring-b"></div>
+          <div class="accretion-dust"></div>
+          <div id="star" class="star" aria-hidden="true"></div>
+          <div class="glow"></div>
+          <div class="lens-flare"></div>
+        </div>
+
+        <div class="timeline">
+          <input id="timeline" type="range" min="0" max="179" value="0" />
+          <div class="time-readout">
+            <span id="age">0 years</span>
+            <span id="color-label">yellow-white</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="data-panel" aria-label="Simulation data">
+        <div class="metric">
+          <span>Effective temperature</span>
+          <strong id="temperature">5772 K</strong>
+        </div>
+        <div class="metric">
+          <span>Luminosity</span>
+          <strong id="luminosity">1.00 L☉</strong>
+        </div>
+        <div class="metric">
+          <span>Radius</span>
+          <strong id="radius-output">1.00 R☉</strong>
+        </div>
+
+        <div class="hr-panel">
+          <div class="panel-heading">
+            <h3>HR Diagram</h3>
+            <span id="hr-position">Sun-like region</span>
+          </div>
+          <canvas id="hr-diagram" width="760" height="420" aria-label="Hertzsprung-Russell diagram"></canvas>
+        </div>
+
+        <canvas id="chart" width="760" height="260" aria-label="Evolution chart"></canvas>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
